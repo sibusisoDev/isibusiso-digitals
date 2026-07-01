@@ -1,0 +1,1 @@
+{"root":["./server/db.ts","./server/index.ts","./server/mail.ts","./server/middleware.ts","./server/routes.ts","./server/static.ts","./server/storage.ts","./server/test-db-connection.ts","./server/test-mail.ts","./server/vite.ts"],"errors":true,"version":"5.9.3"}
