@@ -1,5 +1,4 @@
 import { build as esbuild } from "esbuild";
-import { build as viteBuild } from "../../vite.ts";
 import { rm, readFile } from "fs/promises";
 
 // server deps to bundle to reduce openat(2) syscalls
@@ -36,7 +35,15 @@ async function buildAll() {
     await rm("dist", { recursive: true, force: true });
 
     console.log("building client...");
-    await viteBuild();
+    // call Vite via CLI instead of importing vite.ts
+    await import("child_process").then(({ exec }) =>
+        new Promise((resolve, reject) => {
+            exec("npm run build:client", (err) => {
+                if (err) reject(err);
+                else resolve(void 0);
+            });
+        })
+    );
 
     console.log("building server...");
     const pkg = JSON.parse(await readFile("package.json", "utf-8"));

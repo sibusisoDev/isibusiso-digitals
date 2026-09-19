@@ -1,48 +1,17 @@
-
 import crypto from "crypto";
-import sql from "mssql";
-// @ts-ignore
-import { getDbPool } from "./db.ts";
-
-// -----------------------------
-// Types
-// -----------------------------
-
-export interface ContactRequest {
-    id: string;
-    name: string;
-    email: string;
-    project?: string;
-    message: string;
-    createdAt: Date;
-}
-
-export interface InsertContactRequest {
-    name: string;
-    email: string;
-    project?: string;
-    message: string;
-}
-
-export interface IStorage {
-    saveContact(data: InsertContactRequest): Promise<ContactRequest>;
-}
+import { Connection, Request, TYPES } from "tedious";
+import { getDbPool } from "./db";
+import type { ContactRequest, SavedContact } from "./schema";
 
 // -----------------------------
 // Memory Storage (Dev Mode)
 // -----------------------------
+class MemStorage {
+    private contacts = new Map<string, SavedContact>();
 
-export class MemStorage implements IStorage {
-    private contacts = new Map<string, ContactRequest>();
-
-    async saveContact(data: InsertContactRequest): Promise<ContactRequest> {
+    async saveContact(data: ContactRequest) : Promise<SavedContact> {
         const id = crypto.randomUUID();
-        const record: ContactRequest = {
-            id,
-            createdAt: new Date(),
-            ...data
-        };
-
+        const record: SavedContact = { id, createdAt: new Date(), ...data };
         this.contacts.set(id, record);
         return record;
     }
@@ -51,41 +20,50 @@ export class MemStorage implements IStorage {
 // -----------------------------
 // SQL Storage (Production)
 // -----------------------------
+class SqlStorage {
+    private pool: Connection;
 
-export class SqlStorage implements IStorage {
-    private pool: sql.ConnectionPool;
-
-    constructor(pool: sql.ConnectionPool) {
+    constructor(pool: Connection) {
         this.pool = pool;
     }
 
-    async saveContact(data: InsertContactRequest): Promise<ContactRequest> {
+    async saveContact(data: ContactRequest): Promise<SavedContact>{
         const id = crypto.randomUUID();
 
-        await this.pool.request()
-            .input("id", sql.VarChar(36), id)
-            .input("name", sql.NVarChar(sql.MAX), data.name)
-            .input("email", sql.NVarChar(sql.MAX), data.email)
-            .input("project", sql.NVarChar(sql.MAX), data.project ?? null)
-            .input("message", sql.NVarChar(sql.MAX), data.message)
-            .query(`
-                INSERT INTO dbo.ContactRequests (id, name, email, project, message)
+        return new Promise <SavedContact>((resolve, reject) => {
+            const sql = `INSERT INTO dbo.ContactRequests (id, name, email, project, message)
                 VALUES (@id, @name, @email, @project, @message)
-            `);
+            `;
 
-        return {
-            id,
-            createdAt: new Date(),
-            ...data
-        };
+            const request = new Request(sql, (err) => {
+                if (err) {
+                    console.error("SQL Insert Error:", err.message);
+                    reject(err);
+                    return;
+                }
+                resolve({
+                    id,
+                    createdAt: new Date(),
+                    ...data,
+                });
+            });
+
+            // Add parameters
+            request.addParameter("id", TYPES.VarChar, id);
+            request.addParameter("name", TYPES.NVarChar, data.name);
+            request.addParameter("email", TYPES.NVarChar, data.email);
+            request.addParameter("project", TYPES.NVarChar, data.project ?? null);
+            request.addParameter("message", TYPES.NVarChar, data.message);
+
+            this.pool.execSql(request);
+        });
     }
 }
 
 // -----------------------------
-// Storage Selector
+// Storage Initializer
 // -----------------------------
-
-export let storage: IStorage;
+export let storage: MemStorage | SqlStorage;
 
 export async function initStorage() {
     if (process.env.NODE_ENV === "production") {
@@ -94,8 +72,4 @@ export async function initStorage() {
     } else {
         storage = new MemStorage();
     }
-
-    console.log(
-        `Storage initialized using ${process.env.NODE_ENV === "production" ? "SQL Server" : "in-memory"}`
-    );
 }

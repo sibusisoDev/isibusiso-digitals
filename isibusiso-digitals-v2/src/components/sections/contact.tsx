@@ -5,13 +5,14 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "sonner";
+//import { useToast } from "@/hooks/use-toast";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
 
 const formSchema = z.object({
     name: z.string().min(2, "Name is required"),
-    email: z.string().email("Invalid email address"),
+    email: z.email("Invalid email address"),
     projectType: z.string().min(1, "Please select a project type"),
     message: z.string().min(10, "Please tell us a bit more about your project"),
 });
@@ -19,7 +20,7 @@ const formSchema = z.object({
 type FormData = z.infer<typeof formSchema>;
 
 export function Contact() {
-    const { toast } = useToast();
+    //const { toast } = useToast();
     const form = useForm<FormData>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -43,17 +44,14 @@ export function Contact() {
             return response.json();
         },
         onSuccess: () => {
-            toast({
-                title: "Message Sent",
+            toast.success("Message Sent", {
                 description: "We'll get back to you within 24 hours.",
             });
             form.reset();
         },
-        onError: () => {
-            toast({
-                title: "Error",
-                description: "Something went wrong. Please try again.",
-                variant: "destructive",
+        onError: (error) => {
+            toast.error( "Error", {
+                description: error instanceof Error ? error.message : "Something went wrong. Please try again.",
             });
         },
     });
@@ -63,7 +61,7 @@ export function Contact() {
     }
 
     return (
-        <section id="contact" className="py-24 relative overflow-hidden">
+        <section id="contact" className="py-24 relative overflow-hidden scroll-mt-20">
             <div className="absolute inset-0 grid-bg opacity-20 pointer-events-none" />
 
             <div className="container mx-auto px-6 relative z-10">
@@ -83,7 +81,7 @@ export function Contact() {
                                 </div>
                                 <div>
                                     <h3 className="font-bold mb-1">Email Us</h3>
-                                    <p className="text-muted-foreground">isibusisodev@outlook.com</p>
+                                    <p className="text-muted-foreground">info@isibusiso-digital.co.za</p>
                                 </div>
                             </div>
 
@@ -139,7 +137,7 @@ export function Contact() {
                                             <FormLabel>Email</FormLabel>
                                             <FormControl>
                                                 <Input
-                                                    placeholder="john@company.com"
+                                                    placeholder="info@company.com"
                                                     className="bg-background/50 border-white/10 rounded-xl border-solid focus:border-primary"
                                                     data-testid="input-email"
                                                     {...field}
@@ -158,7 +156,7 @@ export function Contact() {
                                             <FormLabel>Project Type</FormLabel>
                                             <FormControl>
                                                 <Input
-                                                    placeholder="e.g. E-commerce, Marketing Site, Blog..."
+                                                    placeholder="e.g. Business Website, Marketing Site, Blog..."
                                                     className="bg-background/50 border-white/10 rounded-xl border-solid focus:border-primary"
                                                     data-testid="input-project-type"
                                                     {...field}

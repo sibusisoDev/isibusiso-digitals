@@ -1,5 +1,5 @@
 // Styling with tailwindcss using the @tailwindcss/vite plugin
-import { defineConfig } from 'vite'
+import { defineConfig } from "vite"
 import react from '@vitejs/plugin-react'
 import path from "path"
 import tailwindcss from "@tailwindcss/vite"

@@ -70,7 +70,7 @@ app.use(middleware_1.logMiddleware);
                 if (!(process.env.NODE_ENV === "production")) return [3 /*break*/, 2];
                 (0, static_1.serveStatic)(app);
                 return [3 /*break*/, 5];
-            case 2: return [4 /*yield*/, Promise.resolve().then(function () { return require("../vite.ts"); })];
+            case 2: return [4 /*yield*/, Promise.resolve().then(function () { return require("./vite.ts"); })];
             case 3:
                 setupVite = (_a.sent()).setupVite;
                 return [4 /*yield*/, setupVite(httpServer, app)];

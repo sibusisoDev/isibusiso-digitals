@@ -1,63 +1,56 @@
 import type { Express } from "express";
 import type { Server } from "http";
-import { contactSchema, transporter } from "./mail";
 import { storage } from "./storage";
+import { contactSchema } from "./schema";
+import { sendContactEmail } from "./mail";
 
-export async function registerRoutes(httpServer: Server, app: Express): Promise<Server> {
+export async function registerRoutes(
+    httpServer: Server,
+    app: Express
+): Promise<Server> {
 
-    // -----------------------------
-    // Contact Form Route
-    // -----------------------------
+
+    // Contact Form
     app.post("/api/contact", async (req, res) => {
-        // 1. Validate incoming data
-        const result = contactSchema.safeParse(req.body);
 
-        if (!result.success) {
+        console.log("BODY RECEIVED:", req.body);
+
+        // Validate request body
+        const validation = contactSchema.safeParse(req.body);
+
+        if (!validation.success) {
             return res.status(400).json({
-                message: "Invalid form data",
-                errors: result.error.format()
+                success: false,
+                message: "Validation failed.",
+                errors: validation.error.flatten().fieldErrors,
             });
         }
 
-        const { name, email, project, message } = result.data;
-
         try {
-            // 2. Save to database
-            const saved = await storage.saveContact({
-                name,
-                email,
-                project,
-                message
-            });
 
-            // 3. Send email notification
-            await transporter.sendMail({
-                from: `"isibusiso Digital Experiences" <${process.env.EMAIL_USER}>`,
-                to: process.env.EMAIL_USER,
-                replyTo: email,
-                subject: `New Project Inquiry from ${name}${project ? ` (${project})` : ""}`,
-                html: `
-                    <p><strong>Name:</strong> ${name}</p>
-                    <p><strong>Email:</strong> ${email}</p>
-                    ${project ? `<p><strong>Project:</strong> ${project}</p>` : ""}
-                    <p><strong>Message:</strong><br/>${message}</p>
-                    <hr/>
-                    <p><em>Stored in database with ID: ${saved.id}</em></p>
-                `
-            });
+            // Save to database
+            const saved = await storage.saveContact(validation.data);
 
-            // 4. Respond to client
-            return res.status(200).json({
-                message: "Your message has been received. We will contact you shortly."
+            // Send email
+            await sendContactEmail(validation.data);
+
+            return res.status(201).json({
+                success: true,
+                message: "Your enquiry has been submitted successfully.",
+                id: saved.id,
             });
 
         } catch (error) {
+
             console.error("Contact route error:", error);
 
             return res.status(500).json({
-                message: "Something went wrong while processing your request."
+                success: false,
+                message: "Something went wrong while processing your request.",
             });
+
         }
+
     });
 
     return httpServer;

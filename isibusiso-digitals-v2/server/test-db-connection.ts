@@ -33,16 +33,16 @@ const connection = new Connection(config);
 
 connection.on("connect", (err) => {
     if (err) {
-        console.error("❌ Connection failed:", err.message);
+        console.error("Connection failed:", err.message);
     } else {
-        console.log("✅ Connected to SQL Server!");
+        console.log("Connected to SQL Server!");
 
         // Run a simple query to confirm access
         const request = new Request("SELECT 1 AS number", (err, rowCount) => {
             if (err) {
-                console.error("❌ Query failed:", err.message);
+                console.error("Query failed:", err.message);
             } else {
-                console.log(`✅ Query executed successfully, rowCount = ${rowCount}`);
+                console.log(`Query executed successfully, rowCount = ${rowCount}`);
             }
             connection.close();
         });

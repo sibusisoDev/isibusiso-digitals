@@ -92,6 +92,11 @@
 }
 
 @layer base {
+
+  html {
+    scroll-behavior: smooth;
+  }
+
   * {
     @apply border-border;
   }
@@ -108,9 +113,6 @@
     @apply bg-clip-text text-transparent bg-linear-to-r from-primary to-purple-400;
   }
 
-  .glass-card {
-    @apply bg-background/50 backdrop-blur-md border border-white/10;
-  }
 
   .grid-bg {
     background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),

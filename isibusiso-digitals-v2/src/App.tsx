@@ -5,11 +5,16 @@ import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
+import PricingPage from "@/pages/quote";
+import GoogleAnalytics from "@/components/analytics/googleAnalytics";
+import CookieConsent from "@/components/analytics/cookieConsent";
+
 
 function Router() {
     return (
         <Switch>
             <Route path="/" component={Home} />
+            <Route path="/pricing" component={ PricingPage } />
             <Route component={NotFound} />
         </Switch>
     );
@@ -17,12 +22,14 @@ function Router() {
 
 function App() {
     return (
-        <QueryClientProvider client={queryClient}>
-            <TooltipProvider>
-                <Toaster />
+            <QueryClientProvider client={queryClient}>
+                <TooltipProvider>
+                <Toaster duration={10000} />
+                    <GoogleAnalytics />
+                    <CookieConsent />
                 <Router />
-            </TooltipProvider>
-        </QueryClientProvider>
+                </TooltipProvider>
+            </QueryClientProvider>
     );
 }
 
