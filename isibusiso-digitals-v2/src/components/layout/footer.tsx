@@ -20,6 +20,7 @@ export default function Footer() {
                         <a href="https://facebook.com/sibusiso.sbudaa21" className="hover:text-primary transition-colors">Facebook</a>
                     </div>
 
+
                     <div className="text-sm text-muted-foreground">
                         &copy; {new Date().getFullYear()} iSibusiso Digital Experiences. All rights reserved.
                     </div>
