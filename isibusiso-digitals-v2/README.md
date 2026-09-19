@@ -95,15 +95,4 @@ The build has separate server and client steps:
 - `build:client` creates the Vite production bundle.
 - `build` runs both steps.
 
-## Environment Variables
-
-Copy `.env.example` to `.env` and provide the required values for the environment you are running.
-
-Never commit `.env` or real credentials to source control.
-
-## Cleanup Principles
-
-This project intentionally keeps one source of truth for TypeScript application/server code. Generated JavaScript copies, unused UI primitives, obsolete integrations and unused package dependencies should not be committed.
-
-When adding a dependency, verify that it is actually imported by the application before keeping it in `package.json`.
 
