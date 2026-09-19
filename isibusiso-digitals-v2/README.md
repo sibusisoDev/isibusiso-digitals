@@ -1,75 +1,109 @@
-# React + TypeScript + Vite
+# iSibusiso Digital Experiences
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern business website for **iSibusiso Digital Experiences**, built with React, TypeScript, Vite, Tailwind CSS and an Express API.
 
-Currently, two official plugins are available:
+The project combines a responsive marketing site with a small backend responsible for contact-form validation, persistence and email notifications.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Architecture
 
-## React Compiler
-
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
-
-Note: This will impact Vite dev & build performances.
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```text
+Browser
+  |
+  +--> React + TypeScript + Vite
+  |      |
+  |      +--> Wouter routing
+  |      +--> Tailwind CSS
+  |      +--> React Hook Form + Zod validation
+  |      +--> React Query mutation
+  |      +--> Google Analytics (consent-based)
+  |
+  +--> POST /api/contact
+           |
+           +--> Express
+           +--> Zod validation
+           +--> Storage
+           |     +--> Development: in-memory storage
+           |     +--> Production: SQL Server via Tedious
+           |
+           +--> Nodemailer / Gmail SMTP
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Main Features
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- Responsive home page with hero, services, process and contact sections.
+- Dedicated `/pricing` page using the shared navigation and footer layout.
+- Contact form with client- and server-side validation.
+- Contact enquiries saved in development memory or production SQL Server.
+- Email notification through Gmail SMTP.
+- Cookie-consent controlled Google Analytics page views.
+- Reusable UI primitives for buttons, cards, forms, inputs and notifications.
+- TypeScript across the application and server code.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Project Structure
+
+```text
+src/
+├── components/
+│   ├── analytics/       # Cookie consent and Google Analytics
+│   ├── layout/          # Navbar and footer
+│   ├── sections/        # Hero, services, process, pricing and contact
+│   └── ui/              # Reusable UI primitives
+├── pages/               # Home, pricing and 404 pages
+├── lib/                 # Shared utilities and React Query client
+├── assets/              # Page and service imagery
+├── App.tsx              # Application providers and routing
+├── layout.tsx           # Shared layout for secondary pages
+└── main.tsx             # React entry point
+
+server/
+├── db.ts                # Production SQL Server connection
+├── mail.ts              # Gmail SMTP email service
+├── middleware.ts        # Request logging and error handling
+├── routes.ts            # API routes
+├── schema.ts            # Shared server validation schema
+├── static.ts            # Production static-file serving
+├── storage.ts           # Development/production persistence abstraction
+└── vite.ts              # Development Vite middleware
 ```
+
+## Development
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Start the development server:
+
+```bash
+npm run dev
+```
+
+The development server runs the Express API and Vite development middleware together.
+
+## Production Build
+
+```bash
+npm run build
+npm start
+```
+
+The build has separate server and client steps:
+
+- `build:server` compiles the TypeScript Express server into `dist/server`.
+- `build:client` creates the Vite production bundle.
+- `build` runs both steps.
+
+## Environment Variables
+
+Copy `.env.example` to `.env` and provide the required values for the environment you are running.
+
+Never commit `.env` or real credentials to source control.
+
+## Cleanup Principles
+
+This project intentionally keeps one source of truth for TypeScript application/server code. Generated JavaScript copies, unused UI primitives, obsolete integrations and unused package dependencies should not be committed.
+
+When adding a dependency, verify that it is actually imported by the application before keeping it in `package.json`.
+
