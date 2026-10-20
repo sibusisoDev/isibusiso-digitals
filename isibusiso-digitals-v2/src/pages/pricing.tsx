@@ -79,7 +79,7 @@ const pricingPlans = [
     },
 ];
 
-export default function Pricing() {
+export default function ServicesPage() {
     const [, navigate] = useLocation();
     const handleRequestQuote = () => {
         navigate("/");
