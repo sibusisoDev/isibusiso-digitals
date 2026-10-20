@@ -67,18 +67,10 @@ export function Services() {
                     ))}
                 </div>
 
-                <div className="mt-14 text-center">
-                    <p className="text-muted-foreground mb-4">
-                        Interested in our services?
-                    </p>
-
-                    <Link href="/pricing" onClick={() => {
-                            window.scrollTo(0,0)
-                    }}>
-                        <Button size="lg" className="rounded-xl mb-4 border-solid text-base h-12 px-8 font-bold">
-                            See Pricing
-                        </Button>
-                    </Link>
+                <div className="m-12">
+                    <Button variant="outline" size="lg" className="font-bold" asChild>
+                        <Link href="/services">View all services</Link>
+                    </Button>
                 </div>
             </div>
         </section>

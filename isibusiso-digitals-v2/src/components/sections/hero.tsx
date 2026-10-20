@@ -37,7 +37,7 @@ export function Hero() {
 
                     <div className="flex flex-col sm:flex-row gap-4 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-400">
                         <Button size="lg" className="rounded-xl border-solid text-base h-12 px-8 font-bold" asChild>
-                            <a href="#contact">
+                            <a href="/services">
                                 Start Your Project <ArrowRight className="ml-2 h-4 w-4" />
                             </a>
                         </Button>

@@ -1,3 +1,5 @@
+import {Link} from "wouter";
+
 const steps = [
     {
         id: "01",
@@ -51,6 +53,10 @@ export function Process() {
                                 </div>
                             </div>
                         ))}
+
+                        <Link href="/process" className="inline-block font-medium text-primary underline-offset-4 hover:underline">
+                            Read the full process
+                        </Link>
                     </div>
                 </div>
             </div>

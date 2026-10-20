@@ -56,13 +56,7 @@ export async function sendContactEmail(data: ContactRequest): Promise<void> {
                     color: #18181b;
                     ">
                     
-                    <table
-                    width="100%"
-                    cellpadding="0"
-                    cellspacing="0"
-                    border="0"
-                    style="background-color: #f4f4f5; padding: 40px 20px;"
-                    >
+                    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #f4f4f5; padding: 40px 20px;">
                     <tr>
                         <td align="center">
                     
