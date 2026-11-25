@@ -11,7 +11,9 @@ export type CaseStudy = {
     images: { src: string; alt: string }[];
 }
 
-export const caseStudies: CaseStudy[] = [];
+export const caseStudies: CaseStudy[] = [
+
+];
 
 export const getCaseStudies = (slug: string) => caseStudies.find((s) => s.slug === slug);
 

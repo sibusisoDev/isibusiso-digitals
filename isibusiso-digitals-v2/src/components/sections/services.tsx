@@ -3,8 +3,7 @@ import devImg from "@/assets/webDesign.jpeg";
 import growthImg from "@/assets/seo.jpeg";
 import designImg from "@/assets/uxuiDesign.jpeg";
 import { Button } from "@/components/ui/button";
-import {Link, useLocation} from "wouter";
-import {useEffect} from "react";
+import {Link} from "wouter";
 
 const services = [
     {
@@ -15,9 +14,9 @@ const services = [
     },
     {
         title: "Digital Growth & SEO",
-        description: "Technical SEO and performance optimization to ensure your business dominates search results and converts visitors.",
+        description: "Basic SEO and performance optimization to ensure your business dominates search results and converts visitors.",
         image: growthImg,
-        features: ["Technical SEO Audit", "Performance Optimization", "Analytics Setup"],
+        features: ["On-Page SEO", "Performance Optimization", "Analytics Setup"],
     },
     {
         title: "UI/UX Design",

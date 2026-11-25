@@ -1,5 +1,8 @@
 import {Link} from "wouter";
 import { services } from "@/data/services";
+import { legalDocuments } from "@/data/legal";
+import { openCookieSettings} from "@/lib/analytics";
+
 
 export default function Footer() {
     return (
@@ -10,7 +13,7 @@ export default function Footer() {
                         <img
                             src="/logo_white_1.png"
                             alt="iSibusiso Digital Experiences Logo"
-                            className="h-16 md:h-16 lg:h-20 w-auto object-contain dark:invert"
+                            className="h-16 md:h-16 lg:h-20 w-auto object-contain invert dark:invert-0"
                         />
                         <p className="text-sm text-muted-foreground mt-2">
                             Building thoughtful digital experiences, one line at a time.
@@ -54,9 +57,30 @@ export default function Footer() {
                     </div>
                 </div>
 
+                <div className="mt-10 flex flex-col gap-4 border-t border-white/5 pt-6 text-sm text-muted-foreground md:flex-row md:items-center md:justify-between">
+                    <p>
+                        &copy; {new Date().getFullYear()} iSibusiso Digital Experiences. All rights reserved.
+                    </p>
+                    <nav aria-label="Legal">
+                        <ul className="flex flex-wrap gap-x-6 gap-y-2">
+                            {legalDocuments.map((d) => (
+                                <li key={d.slug}>
+                                    <Link href={`/${d.slug}`} className="hover:text-primary transition-colors">
+                                        {d.title}
+                                    </Link>
+                                </li>
+                            ))}
+                            <li>
+                                <button
+                                    type="button"
+                                    onClick={openCookieSettings}
+                                    className="hover:text-primary transition-colors">
+                                    Cookie settings
+                                </button>
+                            </li>
+                        </ul>
+                    </nav>
 
-                <div className="mt-10 border-t border-white/5 pt-6 text-sm text-muted-foreground">
-                    &copy; {new Date().getFullYear()} iSibusiso Digital Experiences. All rights reserved.
                 </div>
             </div>
         </footer>

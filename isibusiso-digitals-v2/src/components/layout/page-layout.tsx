@@ -14,7 +14,7 @@ export function PageLayout({ children }: { children: ReactNode }) {
     return (
         <div className="min-h-screen bg-background text-foreground selection:bg-primary/30">
             <Navbar/>
-            <main className="pt-20">{children}</main>
+            <main className="pt-15">{children}</main>
             <Footer/>
         </div>
     )

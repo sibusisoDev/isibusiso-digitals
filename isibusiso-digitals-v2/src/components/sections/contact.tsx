@@ -9,6 +9,7 @@ import { toast } from "sonner";
 //import { useToast } from "@/hooks/use-toast";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
+import { Link } from "wouter";
 
 const formSchema = z.object({
     name: z.string().min(2, "Name is required"),
@@ -195,6 +196,14 @@ export function Contact() {
                                 >
                                     {submitMutation.isPending ? "Sending..." : "Send Inquiry"}
                                 </Button>
+
+                                <p className="text-xs text-muted-foreground">
+                                    We use your details only to reply to your enquiry. Read our{" "}
+                                    <Link href="/privacy" className="underline underline-offset-4 hover:text-primary">
+                                        Privacy Policy
+                                    </Link>
+                                    .
+                                </p>
                             </form>
                         </Form>
                     </div>

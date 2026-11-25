@@ -11,9 +11,8 @@ function requireEnv(key: string): string {
     return value;
 }
 
-// -----------------------------
 // Tedious NTLM Windows Auth Config
-// -----------------------------
+
 const dbConfig = {
     server: requireEnv("DB_SERVER"),
     options: {
@@ -35,9 +34,9 @@ const dbConfig = {
 
 let pool: Connection | null = null;
 
-// -----------------------------
+
 // Create (or reuse) a connection
-// -----------------------------
+
 export async function getDbPool(): Promise<Connection> {
     if (pool) return pool;
 

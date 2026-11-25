@@ -1,15 +1,27 @@
 import { useEffect, useState } from "react";
-import { loadGoogleAnalytics } from "@/lib/analytics";
+import { disableGoogleAnalytics,  loadGoogleAnalytics, OPEN_COOKIE_SETTINGS_EVENT, } from "@/lib/analytics";
+
 
 export default function CookieConsent() {
-    const [showBanner, setShowBanner] = useState(false);
+    // show banner oon first visit
+    //There is no saved choice yet
+    const [showBanner, setShowBanner] = useState(
+        () => typeof window !== "undefined" && !localStorage.getItem("cookie-consent")
+    );
 
     useEffect(() => {
         const consent = localStorage.getItem("cookie-consent");
 
-        if (!consent) {
-            setShowBanner(true);
+        // Returning visitors who already accepted: load analytics again on every visit
+        if (consent === "accepted") {
+            loadGoogleAnalytics();
         }
+
+        // The footer's "Cookie settings" link reopens the banner
+        const reopen = () => setShowBanner(true);
+        window.addEventListener(OPEN_COOKIE_SETTINGS_EVENT, reopen);
+
+        return () => window.removeEventListener(OPEN_COOKIE_SETTINGS_EVENT, reopen);
     }, []);
 
     const acceptCookies = () => {
@@ -22,6 +34,9 @@ export default function CookieConsent() {
     const rejectCookies = () => {
         localStorage.setItem("cookie-consent", "rejected");
         setShowBanner(false);
+
+        //Also covers someone who accepted earlier and is now withdrawing consent
+        disableGoogleAnalytics();
     };
 
     if (!showBanner) {
@@ -48,8 +63,7 @@ export default function CookieConsent() {
                         <button
                             type="button"
                             onClick={rejectCookies}
-                            className="rounded-md border border-border px-4 py-2 text-sm font-medium transition-colors hover:bg-muted"
-                        >
+                            className="rounded-md border border-border px-4 py-2 text-sm font-medium transition-colors hover:bg-muted">
                             Decline
                         </button>
 

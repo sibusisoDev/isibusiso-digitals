@@ -1,6 +1,7 @@
 import { Switch, Route } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
+import { ThemeProvider } from "next-themes";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/not-found";
@@ -13,6 +14,9 @@ import ProcessPage from "@/pages/process";
 import ContactPage from "@/pages/contact";
 import AboutPage from "@/pages/about";
 import FaqPage from "@/pages/faq";
+import PrivacyPage from "@/pages/privacy";
+import CookiesPage from "@/pages/cookies";
+import TermsPage from "@/pages/terms";
 
 
 function Router() {
@@ -25,6 +29,9 @@ function Router() {
             <Route path="/contact" component={ContactPage} />
             <Route path="/about" component={AboutPage} />
             <Route path="/faq" component={FaqPage} />
+            <Route path="/privacy" component={PrivacyPage} />
+            <Route path="/cookies" component={CookiesPage} />
+            <Route path="/terms" component={TermsPage} />
 {/*
             <Route path="/work" component={Work} />
             <Route path="/work/:slug" component={CaseStudy} />
@@ -43,6 +50,7 @@ function Router() {
 
 function App() {
     return (
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} storageKey="isibusiso-theme">
             <QueryClientProvider client={queryClient}>
                 <TooltipProvider>
                 <Toaster duration={10000} />
@@ -51,6 +59,7 @@ function App() {
                 <Router />
                 </TooltipProvider>
             </QueryClientProvider>
+        </ThemeProvider>
     );
 }
 

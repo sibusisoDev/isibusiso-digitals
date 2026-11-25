@@ -3,9 +3,9 @@ import { Connection, Request, TYPES } from "tedious";
 import { getDbPool } from "./db";
 import type { ContactRequest, SavedContact } from "./schema";
 
-// -----------------------------
+
 // Memory Storage (Dev Mode)
-// -----------------------------
+
 class MemStorage {
     private contacts = new Map<string, SavedContact>();
 
@@ -17,9 +17,9 @@ class MemStorage {
     }
 }
 
-// -----------------------------
+
 // SQL Storage (Production)
-// -----------------------------
+
 class SqlStorage {
     private pool: Connection;
 
@@ -52,7 +52,7 @@ class SqlStorage {
             request.addParameter("id", TYPES.VarChar, id);
             request.addParameter("name", TYPES.NVarChar, data.name);
             request.addParameter("email", TYPES.NVarChar, data.email);
-            request.addParameter("project", TYPES.NVarChar, data.project ?? null);
+            request.addParameter("project", TYPES.NVarChar, data.projectType ?? null);
             request.addParameter("message", TYPES.NVarChar, data.message);
 
             this.pool.execSql(request);
@@ -60,9 +60,9 @@ class SqlStorage {
     }
 }
 
-// -----------------------------
+
 // Storage Initializer
-// -----------------------------
+
 export let storage: MemStorage | SqlStorage;
 
 export async function initStorage() {

@@ -11,7 +11,7 @@ export const contactSchema = z.object({
         .trim()
         .email("Please enter a valid email address."),
 
-    project: z
+    projectType: z
         .string()
         .trim()
         .optional()
