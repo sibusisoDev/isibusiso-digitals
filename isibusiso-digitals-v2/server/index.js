@@ -34,7 +34,7 @@ const __generator = (this && this.__generator) || function (thisArg, body) {
     let t;
     let _ = {
         label: 0, sent: function () {
-            if (t[0] && 1) throw t[1];
+            if (t[0] & 1) throw t[1];
             return t[1];
         }, trys: [], ops: []
     }, f, y, g = Object.create((typeof Iterator === "function" ? Iterator : Object).prototype);
