@@ -3,12 +3,13 @@ import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import React, { useState } from "react";
 import { caseStudies } from "@/data/case-studies";
+import ThemeToggle from "@/components/layout/theme-toggle";
 
 const links = [
     { href: "/services", label: "Services" },
     ...(caseStudies.length > 0 ? [{ href: "/work", label: "Work" }] : []),
-    { href: "/process", label: "Our Strategy" },
-    { href: "/contact", label: "Contact" },
+    { href: "/process", label: "Strategy" },
+    /**/{ href: "/case-study", label: "Case Study" },
     { href: "/about", label: "About" },
     { href: "/faq", label: "FAQ" },
 ];
@@ -19,7 +20,7 @@ export default function Navbar() {
 
     const isActive = (href: string) => location === href || location.startsWith(`${href}/`);
     // I will keep this event handler, although I have defined
-    // html { scroll-behavior: smooth;} in global index.css file
+    // HTML { scroll-behavior: smooth;} in global index.css file
     // Also defined scroll-mt-20 on each of my sections
    const handleNavClick = (
         event: React.MouseEvent<HTMLAnchorElement>
@@ -48,7 +49,7 @@ export default function Navbar() {
         <nav className="fixed top-0 w-full z-50 border-b border-white/5 bg-background/80 backdrop-blur-md">
             <div className="container mx-auto px-6 h-20 flex items-center justify-between">
                 <Link href="/" onClick={handleNavClick} className="hover:opacity-80 transition-opacity flex items-center">
-                    <img src="/logo_white_1.png" alt="iSibusiso Digital Experiences Logo" className="h-36 w-auto object-contain dark:invert" />
+                    <img src="/logo_white_1.png" alt="iSibusiso Digital Experiences Logo" className="h-36 w-auto object-contain invert dark:invert-0" />
                 </Link>
 
                 {/* Desktop Menu */}
@@ -62,6 +63,7 @@ export default function Navbar() {
                             {link.label}
                         </a>*/
                     ))}
+                    <ThemeToggle />
                     <Button className="rounded-xl border-solid font-bold" size="sm" asChild>
                         {/*<a href="#contact" onClick={(event) =>
                         handleNavClick(event, "#contact")
@@ -73,9 +75,12 @@ export default function Navbar() {
                 </div>
 
                 {/* Mobile Toggle */}
-                <button className="md:hidden text-foreground" onClick={() => setIsOpen(!isOpen)} aria-label={isOpen ? "Close menu" : "Open menu"} aria-expanded={isOpen} >
-                    {isOpen ? <X/> : <Menu/>}
-                </button>
+                <div className="md:hidden flex items-center gap-3">
+                    <ThemeToggle />
+                    <button className="text-foreground" onClick={() => setIsOpen(!isOpen)} aria-label={isOpen ? "Close menu" : "Open menu"} aria-expanded={isOpen} >
+                        {isOpen ? <X/> : <Menu/>}
+                    </button>
+                </div>
             </div>
 
             {/* Mobile Menu */}

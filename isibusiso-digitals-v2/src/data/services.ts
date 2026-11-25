@@ -19,7 +19,7 @@ export const services: Service[] = [
         title: "Web Development",
         tagline: "A professional website that turns visitors into enquiries",
         audience: "Startups and small businesses getting online for the first time, or replacing a site that no longer works for them.",
-        problem: "Many small businesses rely on social media alone. Customers can't find them on Google, can't see what they offer, and have no clear way to gett in touch.",
+        problem: "Many small businesses rely on social media alone. Customers can't find them on Google, can't see what they offer, and have no clear way to get in touch.",
         deliverables: [
             "Custom, mobile-friendly design",
             "Contact or quote form",
@@ -41,21 +41,37 @@ export const services: Service[] = [
     {
         serviceId: "digital-growth-seo",
         title: "Digital Growth & SEO",
-        tagline: "Get found, then get chosen",
-        audience: "Businesses with a site that needs more visitors, or more of those visitors turning into customers.",
-        problem: "A site nobody visits earns nothing. Search visibility and conversion improvements build up month after month.",
+        tagline: "Build a stronger online presence with SEO-ready websites",
+        audience: "Helping businesses establish a stronger online presence through SEO-friendly website development, search visibility foundations and essential website improvements.",
+        problem: "Having a website is only the first step. Without properly structured content, essential search engine configuration and a good browsing experience, potential customers may struggle to discover and navigate your business online.",
         deliverables: [
-            "Technical SEO audit",
-            "Performance optimisation",
-            "Analytics setup",
-            "Ongoing improvements after launch",
+            "On-page SEO",
+            "SEO-friendly website development",
+            "Search visibility setup",
+            "Basic website performance improvements",
         ],
-        pricingNote: "Available as an ongoing retainer. Request s quote for a figure that fits your goals.",
+        pricingNote: "Services are quoted according to your website requirements, the work involved and the level of optimisation needed.",
         faqs: [
             {
-                question: "Is SEO a one-off job or ongoing?",
-                answer: "Both are possible. An audit and fixes can be a one-off, while a retainer keeps performance and visibility improving after launch.",
-            }
+                question: "Do you guarantee Google rankings?",
+                answer:
+                    "No. Search engine rankings depend on various factors, including competition, search engine algorithms and website authority. We implement SEO best practices to establish a foundation for search visibility, but specific rankings or traffic results cannot be guaranteed.",
+            },
+            {
+                question: "Can you optimise an existing website?",
+                answer:
+                    "Yes. We can assist with on-page SEO improvements, essential search visibility configuration and basic website performance improvements, depending on your website's existing structure and technology.",
+            },
+            {
+                question: "Do you provide ongoing SEO management?",
+                answer:
+                    "Our primary focus is SEO foundations and website improvements. Any ongoing support or additional optimisation requirements can be discussed and quoted separately.",
+            },
+            {
+                question: "Is SEO included in website development?",
+                answer:
+                    "Our website development includes basic SEO setup. More extensive on-page optimisation, search visibility configuration and website improvements are quoted separately.",
+            },
         ],
     },
     {

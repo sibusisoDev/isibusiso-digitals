@@ -77,7 +77,7 @@ export function CtaBanner({
 /*Helper function for search engine markup so FAQ answers can appear in Google results*/
 export function FaqSchema({ items }: { items: Faq[] }) {
     const jsonLd = {
-        "@context": "http://schema.org/",
+        "@context": "https://schema.org/",
         "@type": "FAQPage",
         mainEntity: items.map((f) => ({
             "@type":"Question",

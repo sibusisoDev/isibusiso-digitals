@@ -13,7 +13,7 @@ export async function registerRoutes(
     // Contact Form
     app.post("/api/contact", async (req, res) => {
 
-        console.log("BODY RECEIVED:", req.body);
+        //console.log("BODY RECEIVED:", req.body);
 
         // Validate request body
         const validation = contactSchema.safeParse(req.body);

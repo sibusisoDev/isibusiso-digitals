@@ -100,70 +100,72 @@ const serviceOfferings: ServiceOffering[] = [
     // Digital Growth & SEO offerings
     {
         serviceIds: ["digital-growth-seo"],
-        title: "SEO Audit & Setup",
+        title: "Website Performance Improvements",
         priceLabel: "Pricing",
         price: "Request a Quote",
         description:
-            "Understand how your website is performing in search and identify practical opportunities to improve its visibility.",
+            "Improve essential website elements that contribute to a smoother browsing experience across desktop and mobile devices.",
         sectionTitle: "Ideal for",
         items: [
-            "Businesses starting their SEO journey",
-            "Websites with low search visibility",
-            "Businesses that need a clear SEO action plan",
+            "Businesses with image-heavy websites",
+            "Websites requiring basic loading improving",
+            "Businesses looking to improve mobile usability",
         ],
         includedTitle: "What's included",
         included: [
-            "Technical SEO audit",
-            "Indexing and crawlability checks",
-            "On-page SEO review",
-            "Metadata and sitemap review",
-            "Prioritised recommendations",
+            "Image compression and optimisation",
+            "Appropriate image formats",
+            "Basic asset optimisation",
+            "Reduction of unnecessary scripts where practical",
+            "Mobile responsiveness checks",
         ],
         featured: false,
     },
     {
         serviceIds: ["digital-growth-seo"],
-        title: "Website Performance Optimisation",
+        title: "Search Visibility Setup",
         priceLabel: "Pricing",
         price: "Request a Quote",
         description:
-            "Improve technical performance and the browsing experience across desktop and mobile devices.",
+            "Help search engines discover your website through essential search visibility configuration and monitoring tools.",
         sectionTitle: "Ideal for",
         items: [
-            "Slow-loading websites",
-            "Businesses with mobile visitors",
-            "Websites that need a technical performance review",
+            "Newly launched websites",
+            "Small businesses establishing search visibility",
+            "Businesses without configured Google search tools",
         ],
         includedTitle: "What's included",
         included: [
-            "Website performance assessment",
-            "Image optimisation recommendations",
-            "Core Web Vitals assessment",
-            "Mobile performance checks",
-            "Prioritised performance improvements",
+            "Google Search Console setup",
+            "XML sitemap submission",
+            "Robots.txt configuration",
+            "Basic indexing checks",
+            "Google Analytics integration",
+            "Search visibility guidance",
         ],
         featured: true,
     },
     {
         serviceIds: ["digital-growth-seo"],
-        title: "Ongoing SEO & Growth",
+        title: "On-Page SEO & Website Setup",
         priceLabel: "Pricing",
-        price: "Monthly Retainer",
+        price: "Request a Quote",
         description:
-            "Work towards sustainable search visibility with ongoing optimisation, monitoring and measurable improvements.",
+            "Establish a solid SEO foundation by improving website content structure, metadata and essential search engine optimisation elements.",
         sectionTitle: "Ideal for",
         items: [
-            "Growing small businesses",
-            "Businesses targeting organic traffic",
-            "Websites that need continuous optimisation",
+            "Small businesses establishing their online presence",
+            "New websites preparing for launch",
+            "Existing websites needing basic SEO improvements",
         ],
         includedTitle: "What's included",
         included: [
-            "Keyword research and refinement",
-            "On-page SEO improvements",
-            "Search performance monitoring",
-            "Analytics review and reporting",
-            "Ongoing recommendations",
+            "Meta titles and descriptions",
+            "Heading hierarchy and content structure",
+            "Image alt text",
+            "Internal linking",
+            "SEO-friendly URLs",
+            "Basic sitemap configuration",
         ],
         featured: false,
     },
@@ -215,7 +217,7 @@ const serviceOfferings: ServiceOffering[] = [
         ],
         featured: true,
     },
-    {
+/*    {
         serviceIds: ["ui-ux-design"],
         title: "Design System & UI Components",
         priceLabel: "Pricing",
@@ -230,14 +232,14 @@ const serviceOfferings: ServiceOffering[] = [
         ],
         includedTitle: "What's included",
         included: [
-            "Colour palette and typography",
+            "Color palette and typography",
             "Button, form and input styles",
             "Reusable UI components",
             "Spacing and layout guidelines",
             "Design system documentation",
         ],
         featured: false,
-    },
+    },*/
 ];
 
 
@@ -246,7 +248,7 @@ export default function ServiceDetailPage() {
     const service = params ? getServices(params.serviceId) : undefined;
 
     useSeo(
-        service ? `${service} (${service.title}) | iSibusiso Digital Experiences` : "Service not found | iSibusis Digital Experiences",
+        service ? `${service.title} | iSibusiso Digital Experiences` : "Service not found | iSibusis Digital Experiences",
         service ? `${service.tagline}. ${service.pricingNote}` : "This service page does not exist",
     );
 
@@ -376,12 +378,12 @@ export default function ServiceDetailPage() {
                 </section>
 
                 <section className="grid gap-10 md:grid-cols-2">
-                    {service.timeline && (
+           {/*         {service.timeline && (
                         <div>
                             <h2 className="text-2xl font-bold">Timeline</h2>
                             <p className="mt-3 text-muted-foreground"></p>
                         </div>
-                    )}
+                    )}*/}
                     <div>
                         <h2 className="text-2xl font-bold">Pricing</h2>
                         <p className="mt-3 text-muted-foreground">{service.pricingNote}</p>

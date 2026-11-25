@@ -1,7 +1,7 @@
 import nodemailer from "nodemailer";
 import type { ContactRequest } from "./schema";
 
-console.log("===== GMAIL CONFIG CHECK =====");
+/*console.log("===== GMAIL CONFIG CHECK =====");
 console.log("GMAIL_USER:", process.env.GMAIL_USER);
 console.log(
     "GMAIL_APP_PASSWORD exists:",
@@ -12,7 +12,7 @@ console.log(
     process.env.GMAIL_APP_PASSWORD?.length
 );
 console.log("CONTACT_RECEIVER:", process.env.CONTACT_RECEIVER);
-console.log("==============================");
+console.log("==============================");*/
 
 
 const transporter = nodemailer.createTransport({
@@ -28,10 +28,12 @@ const transporter = nodemailer.createTransport({
 
 
 export async function sendContactEmail(data: ContactRequest): Promise<void> {
-    const { name, email, project, message } = data;
+    const { name, email, message } = data;
+    const projectType = data.projectType || "Not specified"
+
 
     try {
-        const projectType = project || "Not specified";
+        const projectType = data.projectType || "Not specified";
 
         await transporter.sendMail({
             from: process.env.GMAIL_USER,
